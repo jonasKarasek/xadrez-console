@@ -11,7 +11,7 @@
             this.coluna = coluna;
         }
 
-        public override string ToString()
+        public override string ToString() //exibir posição a partir do objeto
         {
             return "linha: " + linha + ", coluna: " + coluna;
         }
