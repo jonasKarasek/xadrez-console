@@ -17,7 +17,7 @@ namespace xadrez
         {
             return new Posicao(8 - linha, coluna - 'a'); 
         }
-        public override string ToString()//exibe no formato correto. Ex: C7
+        public override string ToString()//exibe no padrão xadrez. Ex: C7
         {
             return "" + coluna + linha;
         }
