@@ -12,18 +12,22 @@ namespace xadrez_console
             P = new Posicao(3, 4);//construtor da classe posição: definindo uma posição - linha 3 e coluna 4
             Console.WriteLine("Posição: " + P);//Apenas para exibir posição do objeto P
             */
-            try
+
+            /*try
             {
-                Tabuleiro tab = new Tabuleiro(8, 8);
+                Tabuleiro tab = new Tabuleiro(8, 8);//gera tabuleiro
 
-                tab.colocarPeca(new Rei(tab, Cor.Preto), new Posicao(0, 0));
+                tab.colocarPeca(new Rei(tab, Cor.Preto), new Posicao(0, 5));//posiciona peça
 
-                Tela.imprimirTabuleiro(tab);
+                Tela.imprimirTabuleiro(tab);//exibe tabuleiro
             }
             catch (TabuleiroException e)
             {
                 Console.WriteLine(e.Message);
-            }
+            }*/
+
+            PosicaoXadrez pos = new PosicaoXadrez('a', 1);
+            Console.WriteLine(pos.toPosicao());
         }
     }
 }

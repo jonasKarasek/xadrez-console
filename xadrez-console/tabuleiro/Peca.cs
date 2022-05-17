@@ -9,7 +9,7 @@
 
         public Peca(Tabuleiro tab, Cor cor)
         {
-            this.posicao = null;
+            this.posicao = null;//peça é gerada sem posição inicial
             this.tab = tab;
             this.cor = cor;
             this.qteMovimentos = 0;
