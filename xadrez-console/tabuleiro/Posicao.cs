@@ -10,7 +10,11 @@
             this.linha = linha;
             this.coluna = coluna;
         }
-
+        public void definirValores(int linha, int coluna)//igual construtor
+        {
+            this.linha = linha;
+            this.coluna = coluna;
+        }
         public override string ToString() //exibir posição no padrão matricial a partir do objeto. Ex: (1, 2)
         {
             return "linha: " + linha + ", coluna: " + coluna;

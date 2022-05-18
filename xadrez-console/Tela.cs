@@ -13,20 +13,33 @@ namespace xadrez_console
                 Console.Write(8 - i + " ");
 
                 for (int j = 0; j < tab.colunas; j++)
+                    imprimirPeca(tab.peca(i, j));
+                Console.WriteLine();
+            }
+            Console.WriteLine("  A B C D E F G H");
+        }
+        public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoes)
+        {
+            ConsoleColor fundoOriginal = Console.BackgroundColor;
+            ConsoleColor fundo = ConsoleColor.DarkGray;
+            for (int i = 0; i < tab.linhas; i++)
+            {
+                Console.Write(8 - i + " ");
+
+                for (int j = 0; j < tab.colunas; j++)
                 {
-                    if (tab.peca(i, j) == null)
-                        Console.Write("- ");//se não haver peça imprime espaço vazio
+                    if (posicoes[i, j])
+                        Console.BackgroundColor = fundo;
                     else
-                    { 
-                        imprimirPeca(tab.peca(i, j));//imprime peça
-                        Console.Write(" ");
-                    }
+                        Console.BackgroundColor = fundoOriginal;
+                    
+                    imprimirPeca(tab.peca(i, j));
+                    Console.BackgroundColor = fundoOriginal;
                 }
                 Console.WriteLine();
             }
             Console.WriteLine("  A B C D E F G H");
         }
-
         public static PosicaoXadrez lerPosicaoXadrez()
         {
             string s = Console.ReadLine();
@@ -36,19 +49,25 @@ namespace xadrez_console
         }
         public static void imprimirPeca(Peca peca)
         {
-            if (peca.cor == Cor.Branco)
-            {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(peca);
-                Console.ForegroundColor = aux;
-            }
+            if (peca == null)
+                Console.Write("- ");//se não haver peça imprime espaço vazio
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(peca);
-                Console.ForegroundColor = aux;
+                if (peca.cor == Cor.Branco)
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(peca);
+                    Console.ForegroundColor = aux;
+                }
+                else
+                {
+                    ConsoleColor aux = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(peca);
+                    Console.ForegroundColor = aux;
+                }
+                Console.Write(" ");
             }
         }
     }

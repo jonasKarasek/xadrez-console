@@ -28,7 +28,12 @@ namespace xadrez
 
         private void colocarPecas()
         {
-            tab.colocarPeca(new Rei(tab, Cor.Preto), new PosicaoXadrez('a', 1).toPosicao());
+            tab.colocarPeca(new Rei(tab, Cor.Preto), new PosicaoXadrez('e', 1).toPosicao());
+            tab.colocarPeca(new Rei(tab, Cor.Branco), new PosicaoXadrez('d', 8).toPosicao());
+            tab.colocarPeca(new Torre(tab, Cor.Preto), new PosicaoXadrez('a', 1).toPosicao());
+            tab.colocarPeca(new Torre(tab, Cor.Preto), new PosicaoXadrez('h', 1).toPosicao());
+            tab.colocarPeca(new Torre(tab, Cor.Branco), new PosicaoXadrez('a', 8).toPosicao());
+            tab.colocarPeca(new Torre(tab, Cor.Branco), new PosicaoXadrez('h', 8).toPosicao());
             //tab.colocarPeca(new Rei(tab, Cor.Branco), new Posicao(7, 3));
         }
     }
