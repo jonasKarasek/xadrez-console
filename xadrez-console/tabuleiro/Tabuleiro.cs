@@ -44,5 +44,15 @@
             pecas[pos.linha, pos.coluna] = p;//coloca a peça na matriz de xadrez
             p.posicao = pos;//define a posição para a peça
         }
+
+        public Peca retirarPeca(Posicao pos)
+        {
+            if (peca(pos) == null)
+                return null;
+            Peca aux = peca(pos);//acessar uma peça através de sua posição
+            aux.posicao = null;//apaga a ligação do tabuleiro com a peça
+            pecas[pos.linha, pos.coluna] = null;//tirando peça do tabuleiro
+            return aux;
+        }
     }
 }
