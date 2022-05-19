@@ -16,7 +16,7 @@
         {
             return pecas[linha, coluna];
         }
-        public Peca peca(Posicao pos)//acesso a cada peça porque a matriz é privada
+        public Peca peca(Posicao pos)//acesso a cada peça através da posição - porque a matriz é privada
         {
             return pecas[pos.linha, pos.coluna];
         }

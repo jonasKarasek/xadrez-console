@@ -14,23 +14,22 @@ namespace xadrez
             return "R";//exibição da peça no tabuleiro
         }
 
-        private bool podeMover(Posicao pos)
+        private bool podeMover(Posicao pos)//destino da peça está vazio ou contém peça inimiga
         {
             Peca p = tab.peca(pos);
-            return true;
-            //return p != null || p.cor != cor;
+            return p == null || p.cor != cor;
         }
-        public override bool[,] movimentosPossiveis()
+        public override bool[,] movimentosPossiveis()//retorna matriz xadrez com as posições para que este tipo de peça pode se mover
         {
-            bool[,] mat = new bool[tab.linhas, tab.colunas];
+            bool[,] mat = new bool[tab.linhas, tab.colunas];//cópia limpa do tabuleiro
 
-            Posicao pos = new Posicao(0, 0);
+            Posicao pos = new Posicao(0, 0);//inicializa posição
 
             //acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
-            if(tab.posicaoValida(pos) && podeMover(pos))
+            pos.definirValores(posicao.linha - 1, posicao.coluna);//posição possível para este tipo de peça
+            if (tab.posicaoValida(pos) && podeMover(pos))
             {
-                mat[pos.linha, pos.coluna] = true;
+                mat[pos.linha, pos.coluna] = true;//marca posição como possível
             }
             //acima+direita
             pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
