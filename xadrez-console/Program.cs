@@ -4,7 +4,7 @@ using xadrez;
 
 namespace xadrez_console
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
@@ -22,12 +22,7 @@ namespace xadrez_console
                     try
                     {
                         Console.Clear();
-                        Tela.imprimirTabuleiro(partida.tab);//exibe tabuleiro
-
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + partida.turno);
-                        Console.WriteLine("Aguardando jogador " + partida.jogadorAtual);
-
+                        Tela.imprimirPartida(partida);
                         Console.WriteLine();
                         Console.Write("Origem: ");
                         Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
@@ -43,6 +38,8 @@ namespace xadrez_console
                         Console.Write ("Destino: ");
 
                         Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+
+                        partida.validarPosicaoDeDestino(origem, destino);
 
                         partida.realizaJogada(origem, destino);
                     }

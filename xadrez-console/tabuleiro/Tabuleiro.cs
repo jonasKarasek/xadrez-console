@@ -4,15 +4,15 @@
     {
         public int linhas { get; set; }
         public int colunas { get; set; }
-        private Peca[,] pecas;//apenas esta classe altera as peças
+        private Peca[,] pecas;//apenas esta classe acessa a matriz de peças
 
-        public Tabuleiro(int linhas, int colunas)
+        public Tabuleiro(int linhas, int colunas)//construtor
         {
             this.linhas = linhas;
             this.colunas = colunas;
             pecas = new Peca[linhas, colunas];//gera matriz de xadrez
         }
-        public Peca peca(int linha, int coluna)
+        public Peca peca(int linha, int coluna)//acesso a cada peça através da dos eixos x, y
         {
             return pecas[linha, coluna];
         }
@@ -47,8 +47,9 @@
 
         public Peca retirarPeca(Posicao pos)
         {
-            if (peca(pos) == null)
+            if (peca(pos) == null)//não há peça para retirar
                 return null;
+            
             Peca aux = peca(pos);//acessar uma peça através de sua posição
             aux.posicao = null;//apaga a ligação do tabuleiro com a peça
             pecas[pos.linha, pos.coluna] = null;//tirando peça do tabuleiro

@@ -5,17 +5,15 @@ namespace xadrez
 {
     class Torre : Peca
     {
-        public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)
+        public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)//construtor
         {
 
         }
-
         public override string ToString()
         {
             return "T";//exibição da peça no tabuleiro
         }
-
-        private bool podeMover(Posicao pos)//destino da peça está vazio ou contém peça inimiga
+        private bool podeMover(Posicao pos)//destino da peça deve ser vazio ou conter peça inimiga
         {
             Peca p = tab.peca(pos);
             return p == null || p.cor != cor;

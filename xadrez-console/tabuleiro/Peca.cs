@@ -7,7 +7,7 @@
         public int qteMovimentos { get; protected set; }//acesso próprio e por subclasses
         public Tabuleiro tab { get; protected set; }//acesso próprio e por subclasses
 
-        public Peca(Tabuleiro tab, Cor cor)
+        public Peca(Tabuleiro tab, Cor cor)//construtor
         {
             this.posicao = null;//peça é gerada sem posição inicial
             this.tab = tab;
@@ -20,11 +20,11 @@
             this.qteMovimentos++;
         }
 
-        public bool existeMovimentosPossiveis()
+        public bool existeMovimentosPossiveis()//para saber se determinada peça poderá ser movida ao selecioná-la
         {
             bool[,] mat = movimentosPossiveis();
 
-            //varre a matriz tabuleiro a procura de uma posição para qual a peça pode ser movimentada
+            //varre a matriz tabuleiro à procura de uma posição para qual a peça pode ser movimentada
             for(int i = 0; i < tab.linhas; i++)
             {
                 for(int j = 0; j < tab.colunas; j++)
@@ -35,10 +35,10 @@
             }
             return false;
         }
-        public bool podeMoverPara(Posicao pos)
+        public bool podeMoverPara(Posicao pos)//verifica se posição passada como parâmetro é true na matriz de movimentos possíveis
         {
             return movimentosPossiveis()[pos.linha, pos.coluna];
         }
-        abstract public bool[,] movimentosPossiveis();
+        abstract public bool[,] movimentosPossiveis();//método abstrato
     }
 }

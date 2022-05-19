@@ -8,7 +8,7 @@ namespace xadrez
         public char coluna { get; set; }//A, B, C, D, E, F, G, H
         public int linha { get; set; }//1, 2, 3, 4, 5, 6, 7, 8
 
-        public PosicaoXadrez(char coluna, int linha)
+        public PosicaoXadrez(char coluna, int linha)//construtor da classe
         {
             this.coluna = coluna;
             this.linha = linha;
