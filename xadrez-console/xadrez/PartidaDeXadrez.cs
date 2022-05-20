@@ -37,6 +37,7 @@ namespace xadrez
             return pecaCapturada;
         }
         public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
+        //utilizada para movimentos que colocam a própria peça em xeque
         {
             Peca p = tab.retirarPeca(destino);
             p.decrementarQteMovimentos();
@@ -50,17 +51,25 @@ namespace xadrez
         public void realizaJogada(Posicao origem, Posicao destino)//jogada do jogador
         {
             Peca pecaCapturada = executaMovimento(origem, destino);
-            if(estaEmXeque(jogadorAtual))
+
+            if(estaEmXeque(jogadorAtual))//jogada volta se coloca o próprio jogador em xeque
             {
                 desfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
-            if (estaEmXeque(adversaria(jogadorAtual)))
+
+            if (estaEmXeque(adversaria(jogadorAtual)))//ajusta xeque
                 xeque = true;
             else
                 xeque = false;
-            turno++;
-            mudaJogador();
+
+            if (testeXequemate(adversaria(jogadorAtual)))
+                terminada = true;
+            else
+            {
+                turno++;
+                mudaJogador();
+            }
         }
         public void validarPosicaoDeOrigem(Posicao pos)//validação - A peça pode ser retirada de onde está?
         {
@@ -112,7 +121,7 @@ namespace xadrez
             else
                 return Cor.Branco;
         }
-        private Peca rei(Cor cor)
+        private Peca rei(Cor cor)//encontra rei da cor
         {
             foreach(Peca x in pecasEmJogo(cor))
             {
@@ -121,20 +130,49 @@ namespace xadrez
             }
             return null;//não deve retornar isso porque os reis estão no tabuleiro enquanto a partida não terminar
         }
-        public bool estaEmXeque(Cor cor)
+        public bool estaEmXeque(Cor cor)//verifica se o rei da cor está em xeque
         {
             Peca R = rei(cor);
 
             if (R == null)
                 throw new TabuleiroException("Não tem Rei " + cor + "no tabuleiro!");
 
-            foreach(Peca x in pecasEmJogo(adversaria(cor)))
+            foreach(Peca x in pecasEmJogo(adversaria(cor)))//para cada peça da cor adversária
             {
                 bool[,] mat = x.movimentosPossiveis();
-                if (mat[R.posicao.linha, R.posicao.coluna])
-                    return true;//está em xeque
+                if (mat[R.posicao.linha, R.posicao.coluna])//posição do rei - se estiver nos movimentos possíveis
+                    return true;//então está em xeque
             }
-            return false;//não está em xeque
+            return false;//caso contrário não está em xeque
+        }
+
+        public bool testeXequemate(Cor cor)
+        {
+            if (!estaEmXeque(cor))
+                return false;
+
+            foreach(Peca x in pecasEmJogo(cor))
+            {
+                bool[,] mat = x.movimentosPossiveis();
+
+                for (int i = 0; i < tab.linhas; i++)
+                {
+                    for (int j = 0; j < tab.colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = executaMovimento(x.posicao, new Posicao(i, j));
+                            bool testeXeque = estaEmXeque(cor);
+                            desfazMovimento(x.posicao, destino, pecaCapturada);
+
+                            if (!testeXeque)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
         public void colocarNovaPeca(char coluna, int linha, Peca peca)
         {
