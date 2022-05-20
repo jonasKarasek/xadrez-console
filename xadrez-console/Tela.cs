@@ -22,7 +22,7 @@ namespace xadrez_console
 
             Console.BackgroundColor = ConsoleColor.DarkGray;
 
-            Console.WriteLine("Brancas: ");
+            Console.WriteLine("Brancas");
 
             imprimirConjunto(partida.pecasCapturadas(Cor.Branco));
 
@@ -34,7 +34,7 @@ namespace xadrez_console
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Black;
 
-            Console.WriteLine("Pretas: ");
+            Console.WriteLine("Pretas");
 
             imprimirConjunto(partida.pecasCapturadas(Cor.Preto));
 

@@ -19,7 +19,10 @@
         {
             this.qteMovimentos++;
         }
-
+        public void decrementarQteMovimentos()//contabiliza movimentos da peça
+        {
+            this.qteMovimentos--;
+        }
         public bool existeMovimentosPossiveis()//para saber se determinada peça poderá ser movida ao selecioná-la
         {
             bool[,] mat = movimentosPossiveis();
