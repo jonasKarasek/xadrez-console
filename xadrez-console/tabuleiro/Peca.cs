@@ -38,7 +38,7 @@
             }
             return false;
         }
-        public bool podeMoverPara(Posicao pos)//verifica se posição passada como parâmetro é true na matriz de movimentos possíveis
+        public bool movimentoPossivel(Posicao pos)//verifica se posição passada como parâmetro é true na matriz de movimentos possíveis
         {
             return movimentosPossiveis()[pos.linha, pos.coluna];
         }

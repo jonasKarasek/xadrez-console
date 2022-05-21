@@ -82,7 +82,7 @@ namespace xadrez
         }
         public void validarPosicaoDeDestino(Posicao origem, Posicao destino)//validação - A peça pode ser colocada na posição escolhida?
         {
-            if(!tab.peca(origem).podeMoverPara(destino))
+            if(!tab.peca(origem).movimentoPossivel(destino))
                 throw new TabuleiroException("Posição de destino inválida!");
         }
         private void mudaJogador()//alterna jogadores a cada jogada
@@ -161,10 +161,11 @@ namespace xadrez
                     {
                         if (mat[i, j])
                         {
+                            Posicao origem = x.posicao;
                             Posicao destino = new Posicao(i, j);
-                            Peca pecaCapturada = executaMovimento(x.posicao, new Posicao(i, j));
+                            Peca pecaCapturada = executaMovimento(origem, destino);
                             bool testeXeque = estaEmXeque(cor);
-                            desfazMovimento(x.posicao, destino, pecaCapturada);
+                            desfazMovimento(origem, destino, pecaCapturada);
 
                             if (!testeXeque)
                                 return false;
@@ -184,42 +185,42 @@ namespace xadrez
         {
             //Peças Brancas
             //peões
-            colocarNovaPeca('a', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('b', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('c', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('d', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('e', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('f', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('g', 2, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('h', 2, new Rei(tab, Cor.Branco));
+            colocarNovaPeca('a', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('b', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('c', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('d', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('e', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('f', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('g', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('h', 2, new Peao(tab, Cor.Branco));
             //segunda fileira de peças
             colocarNovaPeca('a', 1, new Torre(tab, Cor.Branco));
-            colocarNovaPeca('b', 1, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('c', 1, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('d', 1, new Rei(tab, Cor.Branco));
+            colocarNovaPeca('b', 1, new Cavalo(tab, Cor.Branco));
+            colocarNovaPeca('c', 1, new Bispo(tab, Cor.Branco));
+            colocarNovaPeca('d', 1, new Rainha(tab, Cor.Branco));
             colocarNovaPeca('e', 1, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('f', 1, new Rei(tab, Cor.Branco));
-            colocarNovaPeca('g', 1, new Rei(tab, Cor.Branco));
+            colocarNovaPeca('f', 1, new Bispo(tab, Cor.Branco));
+            colocarNovaPeca('g', 1, new Cavalo(tab, Cor.Branco));
             colocarNovaPeca('h', 1, new Torre(tab, Cor.Branco));
-            
+
             //Peças Pretas
             //peões
-            colocarNovaPeca('a', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('b', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('c', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('d', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('e', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('f', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('g', 7, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('h', 7, new Rei(tab, Cor.Preto));
+            colocarNovaPeca('a', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('b', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('c', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('d', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('e', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('f', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('g', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('h', 7, new Peao(tab, Cor.Preto));
             //segunda fileira de peças
             colocarNovaPeca('a', 8, new Torre(tab, Cor.Preto));
-            colocarNovaPeca('b', 8, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('c', 8, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('d', 8, new Rei(tab, Cor.Preto));
+            colocarNovaPeca('b', 8, new Cavalo(tab, Cor.Preto));
+            colocarNovaPeca('c', 8, new Bispo(tab, Cor.Preto));
+            colocarNovaPeca('d', 8, new Rainha(tab, Cor.Preto));
             colocarNovaPeca('e', 8, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('f', 8, new Rei(tab, Cor.Preto));
-            colocarNovaPeca('g', 8, new Rei(tab, Cor.Preto));
+            colocarNovaPeca('f', 8, new Bispo(tab, Cor.Preto));
+            colocarNovaPeca('g', 8, new Cavalo(tab, Cor.Preto));
             colocarNovaPeca('h', 8, new Torre(tab, Cor.Preto));
         }
     }
