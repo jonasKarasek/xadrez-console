@@ -65,11 +65,18 @@ namespace xadrez_console
             Console.Write("]");
         }
         public static void imprimirTabuleiro(Tabuleiro tab)//exibição simples
-        {            
+        {
+            ConsoleColor borda = ConsoleColor.DarkRed;
+            Console.Write(" ");
+            Console.BackgroundColor = borda;
+            Console.WriteLine("------------------");
+
             for(int i = 0; i < tab.linhas; i++)
             {
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.Write(8 - i + "  ");//imprime coluna de números para posição do tabuleiro
+                Console.Write(8 - i);//imprime coluna de números para posição do tabuleiro
+                Console.BackgroundColor = borda;
+                Console.Write("|");
 
                 for (int j = 0; j < tab.colunas; j++)
                 {
@@ -81,17 +88,29 @@ namespace xadrez_console
 
                     imprimirPeca(tab.peca(i, j));
                 }
-                Console.WriteLine();
+                Console.BackgroundColor = borda;
+                Console.WriteLine("|");
             }
+            Console.BackgroundColor = ConsoleColor.Black; 
+            Console.Write(" ");
+            Console.BackgroundColor = borda;
+            Console.WriteLine("------------------"); 
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine("\n   A B C D E F G H");//imprime letras para posição do tabuleiro
+            Console.WriteLine("  A B C D E F G H");//imprime letras para posição do tabuleiro
         }
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,] posicoes)//imprime marcando possibilidades de movimentação para uma peça
         {
+            ConsoleColor borda = ConsoleColor.DarkRed;
+            Console.Write(" ");
+            Console.BackgroundColor = borda;
+            Console.WriteLine("------------------"); 
+            
             for (int i = 0; i < tab.linhas; i++)
             {
-                Console.BackgroundColor = ConsoleColor.Black; 
-                Console.Write(8 - i + "  ");//imprime coluna de números para posição do tabuleiro
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Write(8 - i);//imprime coluna de números para posição do tabuleiro
+                Console.BackgroundColor = borda;
+                Console.Write("|");
 
                 for (int j = 0; j < tab.colunas; j++)
                 {
@@ -111,10 +130,15 @@ namespace xadrez_console
                     }                  
                     imprimirPeca(tab.peca(i, j));
                 }
-                Console.WriteLine();
+                Console.BackgroundColor = borda;
+                Console.WriteLine("|");
             }
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine("\n   A B C D E F G H");//imprime letras para posição do tabuleiro
+            Console.Write(" ");
+            Console.BackgroundColor = borda;
+            Console.WriteLine("------------------");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine("  A B C D E F G H");//imprime letras para posição do tabuleiro
         }
         public static PosicaoXadrez lerPosicaoXadrez()//dados de entrada -> padrão xadrez de posições
         {
@@ -131,14 +155,11 @@ namespace xadrez_console
             {
                 if (peca.cor == Cor.Branco)
                 {
-                    //ConsoleColor aux = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.White;//peça branca
                     Console.Write(peca);
-                    //Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
-                    //ConsoleColor aux = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.Black;//peça preta
                     Console.Write(peca);
                     Console.ForegroundColor = ConsoleColor.White;
