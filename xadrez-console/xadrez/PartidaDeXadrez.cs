@@ -58,17 +58,18 @@ namespace xadrez
             //enPassant
             if (p is Peao)
             {
+                Posicao posPeao; 
+                
                 if (origem.coluna != destino.coluna && pecaCapturada == null)
                 {
-                    Posicao posPeao;
-
-                    if (p.cor == Cor.cor)
+                    if (p.cor == Cor.Branco)
                         posPeao = new Posicao(destino.linha + 1, destino.coluna);
                     else
                         posPeao = new Posicao(destino.linha - 1, destino.coluna);
+
+                    pecaCapturada = tab.retirarPeca(posPeao);
+                    capturadas.Add(pecaCapturada);
                 }
-                pecaCapturada = tab.retirarPeca(posPeao);
-                capturadas.Add(pecaCapturada);
             }
 
             return pecaCapturada;
@@ -130,6 +131,57 @@ namespace xadrez
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
 
+            Peca p = tab.peca(destino);
+
+            //promocao
+            if (p is Peao)
+            {
+                if ((p.cor == Cor.Branco && destino.linha == 0) || (p.cor == Cor.Preto && destino.linha == 7))
+                {
+                    p.tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca pecaPromocao;
+                    Console.WriteLine();
+                    Console.WriteLine("Digite o número correposndente à peça que seu peão será transformado: ");
+                    Console.WriteLine("1 - Bispo");
+                    Console.WriteLine("2 - Cavalo");
+                    Console.WriteLine("3 - Rainha");
+                    Console.WriteLine("4 - Torre");
+                    int peca = int.Parse(Console.ReadLine());
+                    switch (peca)
+                    {
+                        case 1:
+                            pecaPromocao = new Bispo(tab, p.cor);
+                            tab.colocarPeca(pecaPromocao, destino);
+                            pecas.Add(pecaPromocao);
+                            break;
+
+                        case 2:
+                            pecaPromocao = new Cavalo(tab, p.cor);
+                            tab.colocarPeca(pecaPromocao, destino);
+                            pecas.Add(pecaPromocao);
+                            break;
+
+                        case 3:
+                            pecaPromocao = new Rainha(tab, p.cor);
+                            tab.colocarPeca(pecaPromocao, destino);
+                            pecas.Add(pecaPromocao);
+                            break;
+                        
+                        case 4:
+                            pecaPromocao = new Torre(tab, p.cor);
+                            tab.colocarPeca(pecaPromocao, destino);
+                            pecas.Add(pecaPromocao);
+                            break;
+                        default:
+                            pecaPromocao = new Rainha(tab, p.cor);
+                            tab.colocarPeca(pecaPromocao, destino);
+                            pecas.Add(pecaPromocao);
+                            break;
+                    }
+                }
+            }
+            
             if (estaEmXeque(adversaria(jogadorAtual)))//ajusta xeque
                 xeque = true;
             else
@@ -143,9 +195,8 @@ namespace xadrez
                 mudaJogador();
             }
             //enPassant
-            Peca P = tab.peca(destino);
-            if (P is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2))
-                vulneravelEnPassant = P;
+            if(p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2))
+                vulneravelEnPassant = p;
             else
                 vulneravelEnPassant = null;
         }
