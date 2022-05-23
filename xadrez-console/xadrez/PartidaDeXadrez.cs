@@ -13,6 +13,7 @@ namespace xadrez
         private HashSet<Peca> pecas;//apenas esta classe acessa a coleção
         private HashSet<Peca> capturadas;//apenas esta classe acessa a coleção
         public bool xeque { get; private set; }
+        public Peca vulneravelEnPassant { get; private set; }
 
         public PartidaDeXadrez()//construtor
         {
@@ -21,6 +22,7 @@ namespace xadrez
             jogadorAtual = Cor.Branco;
             terminada = false;
             xeque = false;
+            vulneravelEnPassant = null;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             inicioPecas();
@@ -51,6 +53,22 @@ namespace xadrez
                 Peca torre = tab.retirarPeca(origemTorre);
                 torre.incrementarQteMovimentos();
                 tab.colocarPeca(torre, destinoTorre);
+            }
+
+            //enPassant
+            if (p is Peao)
+            {
+                if (origem.coluna != destino.coluna && pecaCapturada == null)
+                {
+                    Posicao posPeao;
+
+                    if (p.cor == Cor.cor)
+                        posPeao = new Posicao(destino.linha + 1, destino.coluna);
+                    else
+                        posPeao = new Posicao(destino.linha - 1, destino.coluna);
+                }
+                pecaCapturada = tab.retirarPeca(posPeao);
+                capturadas.Add(pecaCapturada);
             }
 
             return pecaCapturada;
@@ -85,6 +103,22 @@ namespace xadrez
                 torre.decrementarQteMovimentos();
                 tab.colocarPeca(torre, origemTorre);
             }
+
+            //enPassant
+            if(p is Peao)
+            {
+                if(origem.coluna != destino.coluna && pecaCapturada == vulneravelEnPassant)
+                {
+                    Peca peao = tab.retirarPeca(destino);
+                    Posicao posPeao;
+                    if(p.cor == Cor.Branco)
+                        posPeao = new Posicao(3, destino.coluna);
+                    else
+                        posPeao = new Posicao(4, destino.coluna);
+
+                    tab.colocarPeca(peao, posPeao);
+                }    
+            }
         }
         public void realizaJogada(Posicao origem, Posicao destino)//jogada do jogador
         {
@@ -108,6 +142,12 @@ namespace xadrez
                 turno++;
                 mudaJogador();
             }
+            //enPassant
+            Peca P = tab.peca(destino);
+            if (P is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2))
+                vulneravelEnPassant = P;
+            else
+                vulneravelEnPassant = null;
         }
         public void validarPosicaoDeOrigem(Posicao pos)//validação - A peça pode ser retirada de onde está?
         {
@@ -223,14 +263,14 @@ namespace xadrez
         {
             //Peças Brancas
             //peões
-            colocarNovaPeca('a', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('b', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('c', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('d', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('e', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('f', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('g', 2, new Peao(tab, Cor.Branco));
-            colocarNovaPeca('h', 2, new Peao(tab, Cor.Branco));
+            colocarNovaPeca('a', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('b', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('c', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('d', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('e', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('f', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('g', 2, new Peao(tab, Cor.Branco, this));
+            colocarNovaPeca('h', 2, new Peao(tab, Cor.Branco, this));
             //segunda fileira de peças
             colocarNovaPeca('a', 1, new Torre(tab, Cor.Branco));
             colocarNovaPeca('b', 1, new Cavalo(tab, Cor.Branco));
@@ -243,14 +283,14 @@ namespace xadrez
 
             //Peças Pretas
             //peões
-            colocarNovaPeca('a', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('b', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('c', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('d', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('e', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('f', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('g', 7, new Peao(tab, Cor.Preto));
-            colocarNovaPeca('h', 7, new Peao(tab, Cor.Preto));
+            colocarNovaPeca('a', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('b', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('c', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('d', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('e', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('f', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('g', 7, new Peao(tab, Cor.Preto, this));
+            colocarNovaPeca('h', 7, new Peao(tab, Cor.Preto, this));
             //segunda fileira de peças
             colocarNovaPeca('a', 8, new Torre(tab, Cor.Preto));
             colocarNovaPeca('b', 8, new Cavalo(tab, Cor.Preto));
